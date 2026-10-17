@@ -1,0 +1,36 @@
+
+name: CalculatorTester
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download JUnit
+        run: |
+          curl -L -o junit-platform-console-standalone.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar
+
+      - name: Compile Java files
+        run: |
+          mkdir -p out
+          javac -cp junit-platform-console-standalone.jar -d out src/com/practice/*.java
+
+      - name: Run JUnit tests
+        run: |
+          java -jar junit-platform-console-standalone.jar execute \
+            --class-path out \
+            --scan-class-path
