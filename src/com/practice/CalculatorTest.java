@@ -10,7 +10,7 @@ public class CalculatorTest {
 	
 	@Test
 	void additionTest() {
-		assertEquals(10, c.addition(5, 5));
+		assertEquals(12, c.addition(6, 6));
 	}
 	
 }
